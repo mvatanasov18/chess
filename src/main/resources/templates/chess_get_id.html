@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8">
+  <title>Home Page of Testing Site</title>
+</head>
+<body>
+<form id="idForm" action="/chess/getChessById" method="POST">
+  <input id="id" type="text" name="id" required>
+  <button id="idSubmit" type="submit" form="idForm">get</button>
+</form>
+</body>
+</html>
