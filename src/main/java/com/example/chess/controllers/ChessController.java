@@ -3,6 +3,7 @@ package com.example.chess.controllers;
 
 import com.example.chess.models.Game;
 import com.example.chess.repositories.GameRepository;
+import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,8 +23,9 @@ public class ChessController{
     }
 
     @GetMapping("/makeNewChess")
-    public String makeNewChessGameGET()
+    public String makeNewChessGameGET(HttpServletResponse response)
     {
+
         return "MakeGame";
     }
 

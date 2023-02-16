@@ -8,16 +8,28 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-    @Column
+    @Column(columnDefinition = "varchar(100)",unique = true)
     private String username;
-    @Column
+    @Column(columnDefinition = "varchar(100)")
     private String password;
-    @Column
+    @Column(columnDefinition = "nvarchar(100)",name = "firstName")
     private String firstName;
-    @Column
+    @Column(columnDefinition = "nvarchar(100)",name = "lastName")
     private String lastName;
 
-    public User() {
+    @Column(columnDefinition = "varchar(36)",unique = true)
+    private String session;
+
+    public String getSession() {
+        return session;
+    }
+
+    public void setSession(String session) {
+        this.session = session;
+    }
+
+    public User(){
+
     }
 
     public User(Integer id, String username, String password, String firstName, String lastName) {
