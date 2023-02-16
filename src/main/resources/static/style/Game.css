@@ -1,9 +1,13 @@
 
+*{
+    box-sizing: content-box !important;
+}
 body {
     padding-top: 2vh;
     text-align: center;
     height: 100vh;
-    background: linear-gradient(#b92b27, #1565c0);
+    background: linear-gradient(176deg, rgb(18, 24, 27) 50%, rgb(32, 39, 55) 100%) fixed;
+    color:azure !important;
 }
 
 .c-piece {

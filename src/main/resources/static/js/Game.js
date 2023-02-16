@@ -221,9 +221,5 @@ $(document).ready( function() {
         }
     });
 
-    //Initilizes the board with html elements, called after
-    //ajax, because $.ajax is an asynchronous call, so it works in the background while
-    //the board is created so program gets board contents faster.
-    //Note: This function does not initilize actual pieces, "write_board(string)" does that.
     create_board_spots();
 });

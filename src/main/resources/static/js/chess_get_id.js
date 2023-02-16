@@ -5,18 +5,18 @@ function getIdChess(event){
     $.ajax({
         type : "POST",
         contentType : "application/json",
-        url : "/chess/ajax/getChessById",
+        url : "chess/ajax/getChessById",
         data : JSON.stringify(information),
         dataType : "json",
         timeout : 10000,
         success : function(data) {
-            console.log("SUCCCCESSS IT SUCKS, TO MUCH PRESS.");
+            console.log("bachka");
         },
         error : function(data) {
-            console.log("ERROR BIG FELLA.");
+            console.log("ni baca.");
         },
         done : function(e) {
-            console.log("FINISHED.tttt");
+            console.log("svurshih");
         }
     });
 }

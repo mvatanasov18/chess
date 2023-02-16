@@ -2,12 +2,14 @@ package com.example.chess.models;
 
 import jakarta.persistence.*;
 
+import java.util.Set;
+import java.util.UUID;
+
 @Entity
 @Table(name = "Users")
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private String id;
     @Column(columnDefinition = "varchar(100)",unique = true)
     private String username;
     @Column(columnDefinition = "varchar(100)")
@@ -18,29 +20,53 @@ public class User {
     private String lastName;
 
     @Column(columnDefinition = "varchar(36)",unique = true)
-    private String session;
+    private String sesiq;
 
-    public String getSession() {
-        return session;
+    @OneToMany(mappedBy = "user")
+    private Set<Event> events;
+
+    public Set<Event> getEvents() {
+        return events;
     }
 
-    public void setSession(String session) {
-        this.session = session;
+    public void setEvents(Set<Event> events) {
+        this.events = events;
+    }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "id=" + id +
+                ", username='" + username + '\'' +
+                ", password='" + password + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", session='" + sesiq + '\'' +
+                '}';
+    }
+
+    public String getSesiq() {
+        return sesiq;
+    }
+
+    public void setSesiq(String sesiq) {
+        this.sesiq = sesiq;
     }
 
     public User(){
-
+id= UUID.randomUUID().toString();
     }
 
-    public User(Integer id, String username, String password, String firstName, String lastName) {
-        this.id = id;
+    public User(String id, String username, String password, String firstName, String lastName,String sesiq) {
+        this.id= id;
         this.username = username;
         this.password = password;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.sesiq = sesiq;
     }
 
-    public Integer getId() {
+    public String getId() {
         return id;
     }
 

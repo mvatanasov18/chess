@@ -41,7 +41,6 @@ public class GameRepository {
 
         int res=jdbc.update("INSERT INTO Game (id, board, turn, moves) VALUES (?, ?, ?, ?)",
                 game.getId(), game.getBoard(), game.getTurn(), game.getMoves());
-        System.out.println("hui  m "+ Integer.toString(res));
         return game;
     }
 

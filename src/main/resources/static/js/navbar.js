@@ -42,4 +42,4 @@ function setLinks(){
 
 setTimeout(function (){
     setLinks();
-},1000)
+},400)

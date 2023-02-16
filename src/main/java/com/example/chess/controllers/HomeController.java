@@ -12,7 +12,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.UUID;
 
@@ -29,6 +28,17 @@ public class HomeController {
         {
             return "index";
         }
+        System.out.println("tuka");
+        return "redirect:/Home";
+    }
+
+    @GetMapping(value = "Home")
+    public String bashHome(HttpServletRequest request){
+        if(service.checkCookie(request.getCookies()))
+        {
+            return "index";
+        }
+        System.out.println("tuka");
         return "Home";
     }
 
@@ -70,9 +80,9 @@ public class HomeController {
             Cookie cookie=new Cookie("session",id);
             cookie.setMaxAge(7*24*60*60);
             response.addCookie(cookie);
-            user.setSession(id);
-            userRepository.saveSessionByUsername(user.getSession(), user.getUsername());
-            return "/chess";
+            user.setSesiq(id);
+            userRepository.saveSessionByUsername(user.getSesiq(), user.getUsername());
+            return "redirect:/";
         }else{
             return "Error";
         }
@@ -95,16 +105,20 @@ public class HomeController {
 
         User temp = userRepository.findByUsername(user.getUsername());
         if(temp==null){
+
             try {
+
                 int res = userRepository.save(user);
-                System.out.println(res);
-                if(res==0){
+
+                userRepository.findByUsername(user.getUsername());
+                if(res==1){
                     return "login";
                 }
                 else{
                     return "errorRegistration";
                 }
             }catch(Exception e){
+                e.printStackTrace();
                 return "errorRegistration";
             }
         }else{

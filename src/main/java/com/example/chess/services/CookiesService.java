@@ -18,11 +18,9 @@ public class CookiesService {
         if (cookies != null) {
             for(Cookie cookie:cookies){
                 if(cookie.getName().equals("session")){
-                    User u=repository.findBySession(cookie.getName());
+                    User u=repository.findBySession(cookie.getValue());
                     System.out.println(u);
-                    System.out.println(cookie.getName());
-                    System.out.println("vrushtam "+(!u.getUsername().isEmpty()));
-                    return !u.getUsername().isEmpty();
+                    return u.getUsername().isEmpty();
                 }
             }
         }

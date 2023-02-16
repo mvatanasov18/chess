@@ -1,6 +1,6 @@
 body{
     background: linear-gradient(176deg, rgb(18, 24, 27) 50%, rgb(32, 39, 55) 100%) fixed;
-    color:azure;
+    color:azure !important;
 }
 .center-items{
     display: grid;
