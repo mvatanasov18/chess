@@ -19,12 +19,24 @@ public class CookiesService {
             for(Cookie cookie:cookies){
                 if(cookie.getName().equals("session")){
                     User u=repository.findBySession(cookie.getValue());
-                    System.out.println(u);
+
                     return u.getUsername().isEmpty();
                 }
             }
         }
         System.out.println("vrushtam tru");
         return true;
+    }
+    public User getSessionName(Cookie[] cookies){
+        if (cookies != null) {
+            for(Cookie cookie:cookies){
+                if(cookie.getName().equals("session")){
+                    User u=repository.findBySession(cookie.getValue());
+
+                    return u;
+                }
+            }
+        }
+        return null;
     }
 }

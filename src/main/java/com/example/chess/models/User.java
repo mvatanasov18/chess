@@ -2,6 +2,7 @@ package com.example.chess.models;
 
 import jakarta.persistence.*;
 
+import java.util.HashSet;
 import java.util.Set;
 import java.util.UUID;
 
@@ -55,6 +56,7 @@ public class User {
 
     public User(){
 id= UUID.randomUUID().toString();
+events=new HashSet<>();
     }
 
     public User(String id, String username, String password, String firstName, String lastName,String sesiq) {
@@ -64,6 +66,7 @@ id= UUID.randomUUID().toString();
         this.firstName = firstName;
         this.lastName = lastName;
         this.sesiq = sesiq;
+        events=new HashSet<>();
     }
 
     public String getId() {

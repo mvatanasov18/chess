@@ -36,7 +36,10 @@ function setLinks(){
             "                </li>\n" +
             "                <li class=\"nav-item\">\n" +
             "                    <a class=\"nav-link\" href=\"/getGame\">Get Game</a>\n" +
-            "                </li>"
+            "                </li>" +
+            "                 <li class=\"nav-item\">" +
+            "                  <a class=\"nav-link\" href=\"/events\">Create Event</a></li>"
+
     }
 }
 

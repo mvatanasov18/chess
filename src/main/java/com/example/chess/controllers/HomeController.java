@@ -1,6 +1,8 @@
 package com.example.chess.controllers;
 
+import com.example.chess.models.Event;
 import com.example.chess.models.User;
+import com.example.chess.repositories.EventRepository;
 import com.example.chess.repositories.UserRepository;
 import com.example.chess.services.CookiesService;
 import jakarta.servlet.http.Cookie;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 
+import java.util.Set;
 import java.util.UUID;
 
 @Controller
@@ -22,23 +25,25 @@ public class HomeController {
     private UserRepository userRepository;
     @Autowired
     private CookiesService service;
+    @Autowired
+    private EventRepository eventRepository;
     @GetMapping(value = "/")
     public String home(HttpServletRequest request) {
         if(service.checkCookie(request.getCookies()))
         {
             return "index";
         }
-        System.out.println("tuka");
+
         return "redirect:/Home";
     }
 
     @GetMapping(value = "Home")
-    public String bashHome(HttpServletRequest request){
+    public String bashHome(HttpServletRequest request,Model model){
         if(service.checkCookie(request.getCookies()))
         {
             return "index";
         }
-        System.out.println("tuka");
+        model.addAttribute("events",eventRepository.findAll());
         return "Home";
     }
 
@@ -72,16 +77,18 @@ public class HomeController {
         return "Error";
     }
     @PostMapping(value = "/login")
-    public String postLogin(@ModelAttribute("user") User user, Model model, HttpServletResponse response){
+    public String postLogin(@ModelAttribute("user") User user, HttpServletResponse response){
 
         User temp = userRepository.findByUsername(user.getUsername());
         if(temp!=null) {
             String id = UUID.randomUUID().toString();
+
+            user.setSesiq(id);
+            userRepository.saveSessionByUsername(user.getSesiq(), user.getUsername());
+            userRepository.setEventsForUser(user);
             Cookie cookie=new Cookie("session",id);
             cookie.setMaxAge(7*24*60*60);
             response.addCookie(cookie);
-            user.setSesiq(id);
-            userRepository.saveSessionByUsername(user.getSesiq(), user.getUsername());
             return "redirect:/";
         }else{
             return "Error";
@@ -101,7 +108,7 @@ public class HomeController {
         return "Error";
     }
     @PostMapping(value = "/register")
-    public String postRegister(@ModelAttribute("user") User user, Model model){
+    public String postRegister(@ModelAttribute("user") User user){
 
         User temp = userRepository.findByUsername(user.getUsername());
         if(temp==null){
@@ -122,6 +129,37 @@ public class HomeController {
                 return "errorRegistration";
             }
         }else{
+            return "Error";
+        }
+    }
+
+    @GetMapping("/events")
+    public String events(HttpServletRequest request,Model model){
+        if(service.checkCookie(request.getCookies()))
+        {
+            return "Error";
+        }
+        model.addAttribute("event",new Event());
+        return "events";
+    }
+
+    @PostMapping("/createEvent")
+    public String postCreateEvent(@ModelAttribute("event") Event event,HttpServletRequest request){
+        System.out.println("nz dali idvam tuk");
+        User user=service.getSessionName(request.getCookies());
+        System.out.println("test");
+        if(user!=null) {
+            System.out.println("tuka summm");
+            Set<Event> temp=user.getEvents();
+            temp.add(event);
+            user.setEvents(temp);
+            event.setUser(user);
+            System.out.println(event);
+            eventRepository.save(event);
+            userRepository.update(user);
+            return "redirect:/";
+        }
+        else{
             return "Error";
         }
     }

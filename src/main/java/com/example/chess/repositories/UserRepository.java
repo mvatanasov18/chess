@@ -25,6 +25,17 @@ public class UserRepository {
                 user.getSesiq());
     }
 
+    public int update(User user) {
+        String query = "UPDATE Users SET Username=? ,password=?,first_name=?,last_name=?,sesiq=? WHERE Id=?";
+        return jdbc.update(query,
+                user.getUsername(),
+                user.getPassword(),
+                user.getFirstName(),
+                user.getLastName(),
+                user.getSesiq(),
+                user.getId());
+    }
+
     public User findByUsername(String username) {
         try {
             String query = "SELECT id,Username, password, first_name,last_name,sesiq FROM Users WHERE Username = ?";
@@ -37,7 +48,7 @@ public class UserRepository {
 
     public User findBySession(String session) {
         String query = "SELECT id,Username, password, first_name,last_name,sesiq FROM Users WHERE sesiq=?";
-        System.out.println(session);
+
         return jdbc.queryForObject(query, this::mapRowToUser, session);
     }
 
@@ -47,12 +58,16 @@ public class UserRepository {
     }
 
     public void setEventsForUser(User user){
-        String query="SELECT id, Name, date_time, place " +
+        String query="SELECT e.id, e.Name, e.date_time, e.place " +
                 "FROM Users as u " +
                 "INNER JOIN Events as e " +
                 "ON u.id=e.user_id " +
                 "WHERE u.Id=?";
-        jdbc.queryForObject(query,this::mapRowToEvent,user.getId());
+        try {
+            System.out.println(jdbc.queryForObject(query, this::mapRowToEvent, user.getId()));
+        }catch (Exception e){
+            System.out.println("sushtoto");
+        }
     }
     private Event mapRowToEvent(ResultSet rs, int rowNum) throws SQLException{
         if(rs.isBeforeFirst()){

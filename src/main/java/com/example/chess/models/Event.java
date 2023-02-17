@@ -21,6 +21,17 @@ public class Event {
     @JoinColumn(name = "user_id",nullable = false)
     private User user;
 
+    @Override
+    public String toString() {
+        return "Event{" +
+                "id='" + id + '\'' +
+                ", name='" + name + '\'' +
+                ", dateTime=" + dateTime +
+                ", place='" + place + '\'' +
+                ", user=" + user +
+                '}';
+    }
+
     public User getUser() {
         return user;
     }
